@@ -8,8 +8,7 @@ from streamlit_annotation_tools import text_labeler
 
 st.set_page_config(page_title="Text Labeler", page_icon="📝", layout="wide")
 
-with open("./secrets.toml", "rb") as f:
-    github_api = tomllib.load(f)['GITHUB_TOKEN']
+github_api = st.secrets['GITHUB_TOKEN']
 
 
 def upload_to_github(file, path, repo, token):

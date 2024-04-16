@@ -68,7 +68,7 @@ Long ago, in the days of knights and dragons, the kings and dukes had lived in c
         st.download_button(
             label="Download Labels",
             data=labels_json,
-            file_name="labels.json",
+            file_name="labels_5.json",
             mime="application/json",
             type="primary",
             use_container_width=True

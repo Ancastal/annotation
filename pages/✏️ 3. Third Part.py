@@ -77,7 +77,7 @@ The pigoons were much bigger and fatter than ordinary pigs, to leave room for al
         st.download_button(
             label="Download Labels",
             data=labels_json,
-            file_name="labels.json",
+            file_name="labels_3.json",
             mime="application/json",
             type="primary",
             use_container_width=True

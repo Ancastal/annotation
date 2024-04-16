@@ -6,7 +6,7 @@ authors = ["Antonio Castaldo <ancastal@outlook.it>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^3.10"
 streamlit = "^1.33.0"
 streamlit-annotation-tools = "^1.0.1"
 streamlit-js-eval = "^0.1.7"

@@ -70,7 +70,7 @@ with st.container(border=True):
         st.download_button(
             label="Download Labels",
             data=labels_json,
-            file_name="labels.json",
+            file_name="labels_1.json",
             mime="application/json",
             type="primary",
             use_container_width=True

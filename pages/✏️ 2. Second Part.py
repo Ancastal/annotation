@@ -72,7 +72,7 @@ Ramona would always have a salad. “How’s Sharon doing?” she would say to J
         st.download_button(
             label="Download Labels",
             data=labels_json,
-            file_name="labels.json",
+            file_name="labels_2.json",
             mime="application/json",
             type="primary",
             use_container_width=True

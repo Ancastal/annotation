@@ -8,7 +8,8 @@ from streamlit_annotation_tools import text_labeler
 
 st.set_page_config(page_title="Text Labeler", page_icon="📝", layout="wide")
 
-github_api = st.secrets["GITHUB_TOKEN"]
+with open("./secrets.toml", "rb") as f:
+    github_api = tomllib.load(f)['GITHUB_TOKEN']
 
 
 def upload_to_github(file, path, repo, token):
@@ -62,55 +63,6 @@ Units of Creative Potential include, but are not limited to, the following categ
 -  Proper names
 -  Register (formal or informal)
 """)
-
-st.header("5️⃣ Part 5: Text Annotation")
-
-with st.container(border=True):
-    text = """
-
-    """
-
-    labels = text_labeler(text, labels={
-        "Metaphor": [],
-        "Comparison": [],
-        "Idiomatic Phrase": [],
-        "Wordplay": [],
-        "Onomatopoeia": [],
-        "Phrasal Verb": [],
-        "Cultural Reference": [],
-        "Neologism": [],
-        "Lexical Variety": [],
-        "Linguistic Variety": [],
-        "Punctuation": [],
-        "Rhyme": [],
-        "Proper Name": [],
-        "Register": []
-    })
-
-    # We turn labels into json
-    labels_json = json.dumps(labels)
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.download_button(
-            label="Download Labels",
-            data=labels_json,
-            file_name="labels_1.json",
-            mime="application/json",
-            type="primary",
-            use_container_width=True
-        )
-    with col2:
-        if st.button("Reset Labels", use_container_width=True):
-            streamlit_js_eval(js_expressions="parent.window.location.reload()")
-    with col3:
-        show_labels = st.button("Show Labels", use_container_width=True)
-    if st.button("Next Part", use_container_width=True):
-        st.success(
-            "You have completed the annotation of the text. Thank you for your participation! 🎉🎉🎉")
-
-    if show_labels:
-        with st.expander("Show Labels"):
-            st.write(labels)
 
 st.header("📝 Submit Annotations")
 with st.form(key="form"):

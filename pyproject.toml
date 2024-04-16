@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "annotation"
+version = "0.1.0"
+description = ""
+authors = ["Antonio Castaldo <ancastal@outlook.it>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+streamlit = "^1.33.0"
+streamlit-annotation-tools = "^1.0.1"
+streamlit-js-eval = "^0.1.7"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

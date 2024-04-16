@@ -78,8 +78,10 @@ Compound people didn’t go to the cities unless they had to, and then never alo
         if st.button("Reset Labels", use_container_width=True):
             streamlit_js_eval(js_expressions="parent.window.location.reload()")
     with col3:
-        if st.button("Show Labels", use_container_width=True):
-            with st.expander("Show Labels"):
-                st.write(labels)
+        show_labels = st.button("Show Labels", use_container_width=True)
     if st.button("Next Part", use_container_width=True):
         st.switch_page("pages/✏️ 5. Fifth Part.py")
+
+    if show_labels:
+        with st.expander("Show Labels"):
+            st.write(labels)

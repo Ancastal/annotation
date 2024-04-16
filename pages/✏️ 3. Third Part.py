@@ -72,12 +72,12 @@ The pigoons were much bigger and fatter than ordinary pigs, to leave room for al
 
     # We turn labels into json
     labels_json = json.dumps(labels)
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
     with col1:
         st.download_button(
             label="Download Labels",
             data=labels_json,
-            file_name="labels_3.json",
+            file_name="labels_1.json",
             mime="application/json",
             type="primary",
             use_container_width=True
@@ -85,5 +85,8 @@ The pigoons were much bigger and fatter than ordinary pigs, to leave room for al
     with col2:
         if st.button("Reset Labels", use_container_width=True):
             streamlit_js_eval(js_expressions="parent.window.location.reload()")
+    with col3:
+        if st.button("Show Labels", use_container_width=True):
+            st.write(labels)
     if st.button("Next Part", use_container_width=True):
-        st.switch_page("pages/✏️ 4. Second Part.py")
+        st.switch_page("pages/✏️ 4. Fourth Part.py")

@@ -64,12 +64,12 @@ Compound people didn’t go to the cities unless they had to, and then never alo
 
     # We turn labels into json
     labels_json = json.dumps(labels)
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
     with col1:
         st.download_button(
             label="Download Labels",
             data=labels_json,
-            file_name="labels_4.json",
+            file_name="labels_1.json",
             mime="application/json",
             type="primary",
             use_container_width=True
@@ -77,5 +77,8 @@ Compound people didn’t go to the cities unless they had to, and then never alo
     with col2:
         if st.button("Reset Labels", use_container_width=True):
             streamlit_js_eval(js_expressions="parent.window.location.reload()")
+    with col3:
+        if st.button("Show Labels", use_container_width=True):
+            st.write(labels)
     if st.button("Next Part", use_container_width=True):
-        st.switch_page("pages/✏️ 5. Second Part.py")
+        st.switch_page("pages/✏️ 5. Fifth Part.py")

@@ -80,7 +80,7 @@ Compound people didn’t go to the cities unless they had to, and then never alo
     with col3:
         show_labels = st.button("Show Labels", use_container_width=True)
     if st.button("Next Part", use_container_width=True):
-        st.switch_page("pages/✏️ 5. Fifth Part.py")
+        st.switch_page("pages/✏️ 5. Submit.py")
 
     if show_labels:
         with st.expander("Show Labels"):

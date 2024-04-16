@@ -80,6 +80,7 @@ with st.container(border=True):
             streamlit_js_eval(js_expressions="parent.window.location.reload()")
     with col3:
         if st.button("Show Labels", use_container_width=True):
-            st.write(labels)
+            with st.expander("Show Labels"):
+                st.write(labels)
     if st.button("Next Part", use_container_width=True):
         st.switch_page("pages/✏️ 2. Second Part.py")

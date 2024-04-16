@@ -16,7 +16,7 @@ st.write(
     """)
 with st.expander("ℹ️ What are the possible types of UCPs?"):
     st.write("""
-Units of Creative Potential include, but are not limited, to the following categories:
+Units of Creative Potential include, but are not limited to, the following categories:
 - Metaphors and imagery
 - Comparisons
 - Idiomatic phrases

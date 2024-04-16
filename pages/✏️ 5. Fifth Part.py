@@ -1,8 +1,39 @@
-from streamlit_js_eval import streamlit_js_eval
+import base64
+import requests
 import json
-from streamlit_annotation_tools import text_labeler
+import tomllib
 import streamlit as st
+from streamlit_js_eval import streamlit_js_eval
+from streamlit_annotation_tools import text_labeler
+
 st.set_page_config(page_title="Text Labeler", page_icon="📝", layout="wide")
+
+with open("./secrets.toml", "rb") as f:
+    github_api = tomllib.load(f)['GITHUB_TOKEN']
+
+
+def upload_to_github(file, path, repo, token):
+    """
+    Uploads a file to GitHub.
+    Args:
+    - file: file object to upload.
+    - path: path in the repository (including filename).
+    - repo: repository name, e.g., 'username/repo'.
+    - token: GitHub Personal Access Token.
+    """
+    url = f"https://api.github.com/repos/{repo}/contents/{path}"
+    headers = {
+        "Authorization": f"token {token}",
+        "Content-Type": "application/json"
+    }
+    content = base64.b64encode(file).decode('utf-8')
+    data = {
+        "message": "Upload annotations",
+        "content": content
+    }
+    response = requests.put(url, headers=headers, json=data)
+    return response.json()
+
 
 st.title("📝 Text Labeler Tool")
 st.write(
@@ -37,11 +68,7 @@ st.header("5️⃣ Part 5: Text Annotation")
 
 with st.container(border=True):
     text = """
-Outside the OrganInc walls and gates and searchlights, things were unpredictable. Inside, they were the way it used to be when Jimmy’s father was a kid, before things got so serious, or that’s what Jimmy’s father said. Jimmy’s mother said it was all artificial, it was just a theme park and you could never bring the old ways back, but Jimmy’s father said why knock it? You could walk around without fear, couldn’t you? Go for a bike ride, sit at a sidewalk café, buy an ice-cream cone? Jimmy knew his father was right, because he himself had done all of these things.
-Still, the CorpSeCorps men – the ones Jimmy’s father called our people – these men had to be on constant alert. When there was so much at stake, there was no telling what the other side might resort to. The other side, or the other sides: it wasn’t just one other side you had to watch out for. Other companies, other countries, various factions and plotters. There was too much hardware around, said Jimmy’s father. Too much hardware, too much software, too many
-hostile bioforms, too many weapons of every kind. And too much envy and fanaticism and bad faith.
-Long ago, in the days of knights and dragons, the kings and dukes had lived in castles, with high walls and drawbridges and slots on the ramparts so you could pour hot pitch on your enemies, said Jimmy’s father, and the Compounds were the same idea. Castles were for keeping you and your buddies nice and safe inside, and for keeping everybody else outside.
-“So are we the kings and dukes?” asked Jimmy. “Oh, absolutely,” said his father, laughing.
+
     """
 
     labels = text_labeler(text, labels={
@@ -85,3 +112,38 @@ Long ago, in the days of knights and dragons, the kings and dukes had lived in c
     if show_labels:
         with st.expander("Show Labels"):
             st.write(labels)
+
+st.header("📝 Submit Annotations")
+with st.form(key="form"):
+    st.write("Please, fill in the information below")
+    col1, col2 = st.columns(2)
+    with col1:
+        name = st.text_input("Name")
+    with col2:
+        surname = st.text_input("Surname")
+
+    st.write(
+        "Please, upload the annotations you have downloaded from the previous sections")
+    col1, col2 = st.columns(2)
+
+    with col1:
+        file_1 = st.file_uploader("**Upload Labels - Part 1**", type=["json"])
+    with col2:
+        file_2 = st.file_uploader("**Upload Labels - Part 2**", type=["json"])
+    with col1:
+        file_3 = st.file_uploader("**Upload Labels - Part 3**", type=["json"])
+    with col2:
+        file_4 = st.file_uploader("**Upload Labels - Part 4**", type=["json"])
+
+    submit = st.form_submit_button(
+        "Submit Annotations", use_container_width=True, type="primary")
+    if submit:
+        for file in [file_1, file_2, file_3, file_4]:
+            index = [file_1, file_2, file_3, file_4].index(file)
+            if file is not None:
+                upload_to_github(
+                    file.read(
+                    ), f"annotations/{surname}.{name[0]}-{index}.json", "Ancastal/annotation",
+                    "")
+        st.success("Thank you for your task! 🙏")
+        st.stop()
